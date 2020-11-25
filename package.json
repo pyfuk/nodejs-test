@@ -1,0 +1,23 @@
+{
+  "name": "nodejs-test",
+  "version": "1.0.0",
+  "description": "nodejs-test",
+  "main": "app.ts",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pyfuk/nodejs-test.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pyfuk/nodejs-test/issues"
+  },
+  "homepage": "https://github.com/pyfuk/nodejs-test#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1"
+  }
+}
