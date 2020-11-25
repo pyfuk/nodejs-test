@@ -1,7 +1,11 @@
+import "reflect-metadata";
 import * as express from "express";
+import { createConnection } from "typeorm";
 import * as jwt from "jsonwebtoken";
 
 const app = express();
+
+app.connection = createConnection();
 
 app.get("/api", (req, res) => {
   res.json({
