@@ -1,18 +1,25 @@
-import {Entity, PrimaryGeneratedColumn, Column} from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, BaseEntity } from "typeorm";
 
 @Entity()
-export class User {
+export class User extends BaseEntity {
+  @PrimaryGeneratedColumn()
+  id: number;
 
-    @PrimaryGeneratedColumn()
-    id: number;
+  @Column() login: string;
 
-    @Column()
-    firstName: string;
+  @Column({ select: false }) password: string;
 
-    @Column()
-    lastName: string;
+  static fromObj(obj: Object): User {
+    const user = new User();
+    Object.keys(obj).forEach((key) => (user[key] = obj[key]));
+    return user;
+  }
 
-    @Column()
-    age: number;
-
+  static updateById(id, params) {
+    return User.createQueryBuilder()
+      .update(User)
+      .set(params)
+      .where("id = :id", { id })
+      .execute();
+  }
 }
