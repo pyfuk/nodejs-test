@@ -20,6 +20,7 @@ routes.forEach((r) => {
       const result = await r.handler(req);
       return res.send(result);
     } catch (e) {
+      e.status = e.status || 500;
       res.status(e.status).send(e.message);
     }
   };
