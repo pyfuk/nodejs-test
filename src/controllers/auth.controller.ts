@@ -37,7 +37,7 @@ export const AuthController = {
       throw new ControllerError("Неправильный логин/пароль", 400);
     }
     if (!(await comparePassword(req.body.password, user.password))) {
-      throw new ControllerError("ERROR.INCORRECT_LOGOPASS", 400);
+      throw new ControllerError("Неправильный логин/пароль", 400);
     }
 
     return {

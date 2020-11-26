@@ -16,8 +16,6 @@ app.use(json());
 app.connection = createConnection();
 
 routes.forEach((r) => {
-  console.log(r);
-
   const handler = async (req: Request, res: Response) => {
     try {
       const result = await r.handler(req);
