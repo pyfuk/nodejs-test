@@ -5,6 +5,7 @@ import { json } from "body-parser";
 import { createConnection } from "typeorm";
 import { routes } from "./routing";
 import { Request, Response, NextFunction } from "express";
+import * as fileUpload from "express-fileupload";
 
 import { env } from "./src/environment/environment";
 
@@ -12,6 +13,12 @@ const app = express();
 
 app.use(cors());
 app.use(json());
+
+app.use(
+  fileUpload({
+    createParentPath: true,
+  })
+);
 
 app.connection = createConnection();
 

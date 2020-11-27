@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import { AuthController } from "./src/controllers/auth.controller";
+import { FileController } from "./src/controllers/file.controller";
 import { PingController } from "./src/controllers/ping.controller";
 import { varifyToken } from "./src/utils/varity-token";
 
@@ -21,9 +22,8 @@ export const routes: Route[] = [
 
   /** Auth */
   { method: "post", url: "/signup", handler: AuthController.signup },
-  {
-    method: "post",
-    url: "/signin",
-    handler: AuthController.signin,
-  },
+  { method: "post", url: "/signin", handler: AuthController.signin },
+
+  /** File */
+  { method: "post", url: "/file/upload", handler: FileController.addFile },
 ];

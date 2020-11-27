@@ -7,7 +7,7 @@ export class File extends BaseEntity {
 
   @Column() title: string;
   @Column() extension: string;
-  @Column() mime: string;
+  @Column() mimetype: string;
   @Column() size: number;
   @Column() uploadDate: Date;
 
