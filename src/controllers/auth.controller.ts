@@ -4,6 +4,7 @@ import { comparePassword, encryptPassword } from "../utils/encrypt";
 import { ControllerError } from "../utils/errors";
 import * as jwt from "jsonwebtoken";
 import { env } from "../environment/environment";
+import { addInActiveToken } from "../utils/varity-token";
 
 export const AuthController = {
   signup: async (req: Request) => {
@@ -56,5 +57,10 @@ export const AuthController = {
       .getOne();
 
     return user;
+  },
+
+  logout: async (req: Request) => {
+    addInActiveToken(req.userId, req.token);
+    return { status: "success" };
   },
 };

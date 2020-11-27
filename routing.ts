@@ -28,6 +28,12 @@ export const routes: Route[] = [
     varifyToken: varifyToken,
     handler: AuthController.info,
   },
+  {
+    method: "get",
+    url: "/logout",
+    varifyToken: varifyToken,
+    handler: AuthController.logout,
+  },
 
   /** File */
   {
