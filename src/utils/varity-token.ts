@@ -24,6 +24,6 @@ export const varifyToken = async (
     });
     next();
   } else {
-    throw new ControllerError("Требуется токен для входа", 403);
+    throw new ControllerError("Требуется токен", 403);
   }
 };

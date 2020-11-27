@@ -20,7 +20,10 @@ export const AuthController = {
       password: await encryptPassword(req.body.password),
     }).save();
 
-    return user;
+    return {
+      user,
+      token: jwt.sign({ id: user.id }, env.secret, { expiresIn: "600s" }),
+    };
   },
 
   signin: async (req: Request) => {
@@ -44,5 +47,14 @@ export const AuthController = {
       user,
       token: jwt.sign({ id: user.id }, env.secret, { expiresIn: "600s" }),
     };
+  },
+
+  info: async (req: Request) => {
+    const user = await User.createQueryBuilder("user")
+      .select(["user.id", "user.login"])
+      .where("user.id = :id", { id: req.userId })
+      .getOne();
+
+    return user;
   },
 };
