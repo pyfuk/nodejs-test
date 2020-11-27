@@ -2,6 +2,7 @@ import { Request } from "express";
 import { File } from "../entity/File";
 import { env } from "../environment/environment";
 import { ControllerError } from "../utils/errors";
+import { unlink } from "fs";
 
 const getFileQb = () => {
   return File.createQueryBuilder("file").select([
@@ -14,8 +15,13 @@ const getFileQb = () => {
   ]);
 };
 
-const getFilePath = (name, id, extension) =>
-  env.publicPath + "/files/" + id + "_" + name + "." + extension;
+const getFilePath = (name, id, extension?) =>
+  env.publicPath +
+  "/files/" +
+  id +
+  "_" +
+  name +
+  (extension ? "." + extension : "");
 
 export const FileController = {
   addFile: async (req: Request) => {
@@ -35,7 +41,7 @@ export const FileController = {
       uploadDate: new Date(),
     }).save();
 
-    file.mv(getFilePath(file.name, fileEntity.id, fileEntity.extension));
+    file.mv(getFilePath(file.name, fileEntity.id));
     return fileEntity;
   },
 
@@ -60,5 +66,22 @@ export const FileController = {
     }
 
     return file;
+  },
+
+  deleteFile: async (req: Request) => {
+    const file = await FileController.getFile(req);
+
+    unlink(getFilePath(file.title, file.id, file.extension), async (err) => {
+      if (err) {
+        throw new ControllerError("Не удалось удалить файл", 400);
+      } else {
+        await File.createQueryBuilder("file")
+          .delete()
+          .where("file.id = :fileId", { fileId: file.id })
+          .execute();
+      }
+    });
+
+    return { status: "success" };
   },
 };
