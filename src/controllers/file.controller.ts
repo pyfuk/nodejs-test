@@ -84,4 +84,37 @@ export const FileController = {
 
     return { status: "success" };
   },
+
+  updateFile: async (req: Request) => {
+    const dbFile = await FileController.getFile(req);
+
+    if (!req.files) {
+      throw new ControllerError("Нет файла для загрузки", 400);
+    }
+
+    let file = req.files.file;
+
+    const [fileName, fileExtension] = file.name.split(".");
+
+    unlink(
+      getFilePath(dbFile.title, dbFile.id, dbFile.extension),
+      async (err) => {
+        if (err) {
+          throw new ControllerError("Не удалось удалить файл", 400);
+        }
+      }
+    );
+
+    const fileEntity = await File.updateById(dbFile.id, {
+      title: fileName,
+      extension: fileExtension,
+      mimetype: file.mimetype,
+      size: file.size,
+      uploadDate: new Date(),
+    });
+
+    file.mv(getFilePath(file.name, dbFile.id));
+
+    return fileEntity;
+  },
 };

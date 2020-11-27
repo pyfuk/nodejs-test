@@ -33,4 +33,9 @@ export const routes: Route[] = [
     url: "/file/delete/:id",
     handler: FileController.deleteFile,
   },
+  {
+    method: "put",
+    url: "/file/update/:id",
+    handler: FileController.updateFile,
+  },
 ];
