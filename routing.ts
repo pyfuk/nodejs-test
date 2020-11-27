@@ -27,4 +27,5 @@ export const routes: Route[] = [
   /** File */
   { method: "post", url: "/file/upload", handler: FileController.addFile },
   { method: "get", url: "/file/list", handler: FileController.getFiles },
+  { method: "get", url: "/file/:id", handler: FileController.getFile },
 ];

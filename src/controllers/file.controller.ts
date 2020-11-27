@@ -40,11 +40,25 @@ export const FileController = {
   },
 
   getFiles: async (req: Request) => {
-    const files = getFileQb()
+    const files = await getFileQb()
       .limit(req.query.list_size || 10)
       .offset(req.query.page * req.query.list_size || 0)
       .getMany();
 
     return files;
+  },
+
+  getFile: async (req: Request) => {
+    const file = await getFileQb()
+      .where("file.id = :fileId", {
+        fileId: req.params.id,
+      })
+      .getOne();
+
+    if (!file) {
+      throw new ControllerError("Файл не найден", 400);
+    }
+
+    return file;
   },
 };
