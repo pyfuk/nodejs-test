@@ -26,7 +26,11 @@ routes.forEach((r) => {
   const handler = async (req: Request, res: Response) => {
     try {
       const result = await r.handler(req);
-      return res.send(result);
+      if (result.file) {
+        return res.download(result.file);
+      } else {
+        return res.send(result);
+      }
     } catch (e) {
       e.status = e.status || 500;
       res.status(e.status).send(e.message);

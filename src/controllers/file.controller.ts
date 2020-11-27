@@ -117,4 +117,10 @@ export const FileController = {
 
     return fileEntity;
   },
+
+  downloadFile: async (req: Request) => {
+    const dbFile = await FileController.getFile(req);
+
+    return { file: getFilePath(dbFile.title, dbFile.id, dbFile.extension) };
+  },
 };

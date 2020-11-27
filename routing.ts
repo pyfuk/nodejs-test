@@ -38,4 +38,9 @@ export const routes: Route[] = [
     url: "/file/update/:id",
     handler: FileController.updateFile,
   },
+  {
+    method: "get",
+    url: "/file/download/:id",
+    handler: FileController.downloadFile,
+  },
 ];
